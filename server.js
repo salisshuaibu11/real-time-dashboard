@@ -19,3 +19,11 @@ io.on("connection", (socket) => {
     require(`./controllers/${controllers[i].controller}`)(socket);
   }
 });
+
+io.on("connection", (socket) => {
+  setInterval(() => {
+    socket.emit("seconds.update", {
+      time: new Date()
+    });
+  }, 1000);
+});
