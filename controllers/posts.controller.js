@@ -8,10 +8,16 @@ var posts = [{
 
 module.exports = (socket) => {
   // Recent Posts
-  for (let i = 0; i < posts.lengthl; i++) {
-    socket.emit("post.add", posts[i]);
-    socket.emit("posts.count", {
-      count: i + 1
-    });
-  }
+  let i = 0;
+  let addingPosts = setInterval(() => {
+    if (posts[i]) {
+      socket.emit("post.add", posts[i]);
+      socket.emit("posts.count", {
+        count: i + 1
+      });
+      i++;
+    } else {
+      clearInterval(addingPosts);
+    }
+  }, 2000);
 };
