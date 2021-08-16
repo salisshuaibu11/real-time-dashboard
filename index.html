@@ -55,5 +55,41 @@
 
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <<script>
+      let socket = io("http://localhost:5000");
+
+      // Update the users count
+      socket.on("users.count", (data) => {
+        $("#users-count").text(data.count);
+      });
+
+      // Update the comments count
+      socket.on("comments.count", (data) => {
+        $("#comments-count").text(data.count);
+      });
+
+      // Update the posts count
+      socket.on("post.count", (data) => {
+        $("#posts-count").text(data.count);
+      });
+
+      // Add a comment
+      socket.on('comment.add', function (data) {
+          var $row = $('<tr>' +
+              '<td>' + data.user + '</td>' +
+              '<td>' + data.comment + '</td>' +
+          '</tr>');
+          $('#recent-comments').append($row);
+      });
+
+      // Add a post
+      socket.on('post.add', function (data) {
+          var $row = $('<tr>' +
+              '<td>' + data.user + '</td>' +
+              '<td>' + data.title + '</td>' +
+          '</tr>');
+          $('#recent-posts').append($row);
+      });
+    </script>
   </body>
 </html>
